@@ -1,0 +1,120 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #e3e9ff);
+    color: #111;
+    overflow-x: hidden;
+}
+
+/* Shapes */
+.shape {
+    position: absolute;
+    opacity: 0.12;
+    filter: blur(2px);
+    animation: float 18s ease-in-out infinite;
+}
+
+.circle {
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    top: -80px;
+    left: -80px;
+}
+
+.square {
+    width: 350px;
+    height: 350px;
+    border-radius: 35px;
+    background: linear-gradient(135deg, #5865F2, #3b4de0);
+    bottom: -120px;
+    right: -60px;
+    animation-delay: -7s;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-40px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: 180px auto 120px;
+    padding: 60px 50px;
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 35px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 15px 60px rgba(0, 0, 0, 0.1);
+}
+
+/* Titles */
+h1 {
+    font-size: 50px;
+    font-weight: 900;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: transparent;
+    -webkit-background-clip: text;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 35px;
+    padding: 20px 55px;
+    background: linear-gradient(135deg, #5865F2, #3b4de0);
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    box-shadow: 0 15px 35px rgba(88, 101, 242, 0.4);
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 55px rgba(88, 101, 242, 0.65);
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
+    margin-top: 10px;
+    background: rgba(255,255,255,0.7);
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    font-size: 17px;
+}
+
+/* Sections */
+section {
+    margin-top: 40px;
+    padding: 25px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.07);
+}
+
+pre {
+    background: rgba(255,255,255,0.8);
+    padding: 20px;
+    border-radius: 15px;
+    overflow-x: auto;
+}
+
+/* Small screens */
+@media (max-width: 700px) {
+    h1 { font-size: 38px; }
+    .container { padding: 40px 25px; }
+}

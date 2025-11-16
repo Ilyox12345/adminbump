@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>BumpX — Dashboard Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="shape circle"></div>
+<div class="shape square"></div>
+
+<div class="container">
+
+    <div id="loading">
+        <h1>Vérification de l'accès...</h1>
+    </div>
+
+    <div id="dashboard" style="display:none;">
+
+        <h1>Bienvenue <span id="username"></span></h1>
+        <a class="btn" onclick="logout()">Déconnexion</a>
+
+        <section>
+            <h2>📊 Stats du bot</h2>
+            <pre id="botStats">Chargement...</pre>
+        </section>
+
+        <section>
+            <h2>🌍 Stats globales</h2>
+            <pre id="workerStats">Chargement...</pre>
+        </section>
+
+        <section>
+            <h2>🛡️ Administrateurs</h2>
+            <pre id="adminList"></pre>
+
+            <input id="addAdminId" placeholder="ID utilisateur">
+            <a class="btn" onclick="addAdmin()">Ajouter</a>
+
+            <input id="removeAdminId" placeholder="ID utilisateur">
+            <a class="btn" onclick="removeAdmin()">Retirer</a>
+        </section>
+
+        <section>
+            <h2>⛔ Serveurs bannis</h2>
+            <pre id="bannedList"></pre>
+
+            <input id="banId" placeholder="ID serveur">
+            <a class="btn" onclick="banServer()">Ban</a>
+
+            <input id="unbanId" placeholder="ID serveur">
+            <a class="btn" onclick="unbanServer()">Unban</a>
+        </section>
+
+        <section>
+            <h2>📝 Bios des serveurs</h2>
+            <pre id="bioList"></pre>
+
+            <input id="bioServerId" placeholder="ID serveur">
+            <input id="bioText" placeholder="Nouvelle bio">
+            <a class="btn" onclick="updateBio()">Mettre à jour</a>
+
+            <input id="bioRemoveId" placeholder="ID serveur">
+            <a class="btn" onclick="removeBio()">Supprimer</a>
+        </section>
+
+    </div>
+
+</div>
+
+<script src="panel.js"></script>
+</body>
+</html>
