@@ -3,7 +3,7 @@
 // ============================
 
 // TON WORKER CLOUDFLARE
-const API_BASE = "https://bumpxx.ilyesquibroute93.workers.dev";
+const API_BASE = "https://api.ilyesquibroute93.workers.dev";
 
 // ============================
 // TOKEN DISCORD (OAUTH2)
@@ -91,4 +91,5 @@ async function loadAll() {
     document.getElementById("workerStats").textContent =
         JSON.stringify(workerStats, null, 2);
 }
+
 
