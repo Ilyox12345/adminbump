@@ -1,8 +1,9 @@
 // ============================
 // CONFIG
 // ============================
-const API_BASE = "https://api.bumpx.fr";   // ⚠️ Mets ton vrai domaine API ici
-const ADMIN_SECRET = "Bumpxxx@";           // Ton secret admin (même que ton bot)
+
+// TON WORKER CLOUDFLARE
+const API_BASE = "https://bumpxx.ilyesquibroute93.workers.dev";
 
 // ============================
 // TOKEN DISCORD (OAUTH2)
@@ -10,7 +11,7 @@ const ADMIN_SECRET = "Bumpxxx@";           // Ton secret admin (même que ton bo
 const fragment = new URLSearchParams(window.location.hash.slice(1));
 const accessToken = fragment.get("access_token");
 
-// Si pas connecté → renvoie login
+// Si pas connecté → renvoie au login
 if (!accessToken) {
     window.location.href = "index.html";
 }
@@ -29,32 +30,20 @@ async function getDiscordUser() {
 
 
 // ============================
-// CHECK ADMIN PANEL
+// PANEL (pas d'admin pour le moment)
 // ============================
-async function isAdmin(id) {
-    const res = await fetch(API_BASE + "/api/admins", {
-        headers: { Authorization: "Bearer " + ADMIN_SECRET }
-    });
-
-    const data = await res.json();
-    return data.admins.includes(id);
+function isAdmin() {
+    // TON WORKER n’a pas de système d’admins
+    return true; // accès autorisé pour toi, en attendant la vraie API
 }
 
 
 // ============================
-// API HELPER
+// API pour récupérer les STATS du Worker
 // ============================
-async function api(url, method = "GET", body = null) {
-    const response = await fetch(API_BASE + url, {
-        method: method,
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + ADMIN_SECRET
-        },
-        body: body ? JSON.stringify(body) : null
-    });
-
-    return response.json();
+async function getWorkerStats() {
+    const res = await fetch(API_BASE + "/stats");
+    return res.json();
 }
 
 
@@ -71,23 +60,22 @@ function logout() {
 // ============================
 (async () => {
     const user = await getDiscordUser();
-    const admin = await isAdmin(user.id);
+    const admin = isAdmin();
 
     if (!admin) {
         document.body.innerHTML = `
             <div style="text-align:center;margin-top:80px;font-size:32px;color:red;">
                 ❌ Accès refusé<br><br>
-                Vous n'êtes pas administrateur de BumpX.
+                Vous n'êtes pas administrateur.
             </div>
         `;
         return;
     }
 
-    // Affiche panel
+    // Affiche le panel
     document.getElementById("loading").style.display = "none";
     document.getElementById("dashboard").style.display = "block";
 
-    // Username Discord
     document.getElementById("username").textContent = user.username;
 
     loadAll();
@@ -95,69 +83,12 @@ function logout() {
 
 
 // ============================
-// CHARGER TOUTES LES DONNÉES
+// CHARGER LES STATS GLOBALES
 // ============================
 async function loadAll() {
-    document.getElementById("botStats").textContent =
-        JSON.stringify(await api("/api/bot/stats"), null, 2);
+    const workerStats = await getWorkerStats();
 
     document.getElementById("workerStats").textContent =
-        JSON.stringify(await api("/api/worker"), null, 2);
-
-    document.getElementById("adminList").textContent =
-        JSON.stringify(await api("/api/admins"), null, 2);
-
-    document.getElementById("bannedList").textContent =
-        JSON.stringify(await api("/api/bump/banned"), null, 2);
-
-    document.getElementById("bioList").textContent =
-        JSON.stringify(await api("/api/bio/list"), null, 2);
+        JSON.stringify(workerStats, null, 2);
 }
 
-
-// ============================
-// ACTIONS ADMIN
-// ============================
-
-// Ajouter un admin
-async function addAdmin() {
-    const id = document.getElementById("addAdminId").value;
-    await api("/api/admins/add", "POST", { user_id: id });
-    loadAll();
-}
-
-// Retirer un admin
-async function removeAdmin() {
-    const id = document.getElementById("removeAdminId").value;
-    await api("/api/admins/remove", "POST", { user_id: id });
-    loadAll();
-}
-
-// Bannir un serveur
-async function banServer() {
-    const id = document.getElementById("banId").value;
-    await api("/api/bump/ban", "POST", { server_id: id });
-    loadAll();
-}
-
-// Débannir un serveur
-async function unbanServer() {
-    const id = document.getElementById("unbanId").value;
-    await api("/api/bump/unban", "POST", { server_id: id });
-    loadAll();
-}
-
-// Modifier une bio
-async function updateBio() {
-    const id = document.getElementById("bioServerId").value;
-    const bio = document.getElementById("bioText").value;
-    await api("/api/bio/update", "POST", { server_id: id, bio });
-    loadAll();
-}
-
-// Supprimer une bio
-async function removeBio() {
-    const id = document.getElementById("bioRemoveId").value;
-    await api("/api/bio/remove", "POST", { server_id: id });
-    loadAll();
-}
