@@ -1,6 +1,5 @@
 const CLIENT_ID = "1439239509521989745";
-const REDIRECT_URI = "https://bumpx.pages.dev/panel.html";
-
+const REDIRECT_URI = "https://dashboard.bumpx.fr/panel.html";
 
 function loginDiscord() {
     const url =
